@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Телефонная книга на Ангуляр</title>
+
+	<link rel="stylesheet" href="foundation.min.css">
+	<script src="angular.min.js" ></script>
+
+	<style>
+		form{
+			max-width: 500px;
+			margin: 0 auto;
+			padding-top: 20px;
+		}
+		form button.small{
+			padding: 8px 17px;
+		}
+		#phonebook{
+			margin: 0 auto;
+		}
+		#phonebook button.tiny{
+			margin-bottom: 0;
+			padding: 5px 10px;
+		}
+	</style>
+	<script>
+	var app = angular.module('app', [])
+		.controller("phonebookCtrl", function($scope) {
+			$scope.currentPersonid=-1;
+			$scope.phonebook = [
+				{
+					name: "Чапаев Василий Иванович",
+					phone: "+123-052-5555-234",
+					email: "vasiliy@chapaev.ru"
+				}	
+			];
+			$scope.addNewPerson = function() {
+				if($scope.name !='') {
+					$scope.phonebook.push ({
+						name: $scope.name,
+						phone: $scope.phone,
+						email: $scope.email
+					});
+					$scope.name ='';
+					$scope.phone ='';
+					$scope.email ='';
+				}
+			}
+			$scope.savePerson = function(){
+				if($scope.currentPersonid>-1){
+					var id = $scope.currentPersonid;
+					$scope.phonebook[id].name = $scope.name;
+					$scope.phonebook[id].phone = $scope.phone;
+					$scope.phonebook[id].email = $scope.email;
+					$scope.name = '';
+					$scope.phone = '';
+					$scope.email = '';
+					$scope.currentPersonid = -1;
+				}
+			}
+			$scope.editPerson = function(id){
+				$scope.currentPersonid = id;
+				$scope.name=$scope.phonebook[id].name;
+				$scope.phone=$scope.phonebook[id].phone;
+				$scope.email=$scope.phonebook[id].email;
+			}
+			$scope.deletePerson = function(id){
+				$scope.phonebook.splice(id,1);
+			}
+		})
+	</script>
+</head>
+<body ng-app="app" ng-controller="phonebookCtrl">
+	<form action="">
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="" class="right inline">ФИО</label>
+			</div>
+			<div class="small-9 columns">
+				<input type="text" ng-model="name">
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="" class="right inline">№Телефона</label>
+			</div>
+			<div class="small-9 columns">
+				<input type="text" id="right-lable" ng-model="phone">
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="" class="right inline">Ел.почта</label>
+			</div>
+			<div class="small-9 columns">
+				<input type="text" id="right-label" ng-model="email">
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-3 columns"></div>
+			<div class="small-9 columns">
+				<button class="small radius" ng-click="addNewPerson()" ng-hide="currentPersonid>-1">Добавить</button>
+				<button class="small radius" ng-click="savePerson" ng-show="currentPersonid>-1">Сохранить</button>
+			</div>
+		</div>
+	</form>
+	<table id-"phonebook">
+		<thead>
+			<tr>
+				<th>№</th>
+				<th>ФИО</th>
+				<th>№ телефона</th>
+				<th>Эл.почта</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="person in phonebook">
+				<td>{{ $index + 1 }}</td>
+				<td>{{ person.name }}</td>
+				<td>{{ person.phone }}</td>
+				<td>{{ person.email }}</td>
+				<td>
+					<ul class="button-group radius">
+						<li><button class="tiny radius" ng-click="editPerson($index)">Редактировать</button></li>
+						<li><button class="tiny radius alert" ng-click="delitePerson($index)">Удалить</button></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
