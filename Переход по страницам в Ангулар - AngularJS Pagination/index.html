@@ -1,37 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>переход по страницам в Ангуляр</title>
-	<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<title>Переход по страницам в Ангулар - AngularJS Pagination</title>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.0/Rx.js"></script>
-	<script src="app.js"></script>
-	<style>
-		.container{padding-top: 20px;}
-		.pagination{display: inline-block;}
-		.pagination:after{
-			content: '';
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+	<style type="text/css">
+		.container {
+			margin-top: 20px;
+		}
+		.pagination {
+			display: inline-block;
+		}
+		.pagination:after {
+			content: " ";
 			display: table;
 			clear: both;
 		}
-		.pagination li{cursor: pointer;}
-		.pagination-wrap{text-align: center;}
+		.pagination li {
+			cursor: pointer;
+		}
+		.pagination-wrap {
+			text-align: center;
+		}
 	</style>
+
+	<script src="angular.min.js"></script>
+
 	<script>
-	var app = angular.module('app,[]')
+		var app = angular.module( 'app', [ ] )
+		
+			.factory('pagination', function( $sce ) {
 
-		.controller('mainCtrl', function(){
+				var currentPage = 0;
+				var itemsPerPage = 12;
+				var products = [];
 
-		})
+				return {
+
+					setProducts: function( newProducts ) {
+						products = newProducts
+					}, /* END of setProducts */
+
+					getPageProducts: function(num) {
+						var num = angular.isUndefined(num) ? 0 : num;
+						var first = itemsPerPage * num;
+						var last = first + itemsPerPage;
+						currentPage = num;
+						last = last > products.length ? (products.length - 1) : last;
+						return products.slice(first, last);
+					}, /* END of getPageProducts */
+
+					getTotalPagesNum: function() {
+						return Math.ceil( products.length / itemsPerPage );
+					}, /* END of getTotalPagesNum */
+
+					getPaginationList: function() {
+						var pagesNum = this.getTotalPagesNum();
+						var paginationList = [];
+						paginationList.push({
+							name: $sce.trustAsHtml('&laquo;'),
+							link: 'prev'
+						});
+						for (var i = 0; i < pagesNum; i++) {
+							var name = i + 1;
+							paginationList.push({
+								name: $sce.trustAsHtml( String(name) ),
+								link: i
+							});
+						};
+						paginationList.push({
+							name: $sce.trustAsHtml('&raquo;'),
+							link: 'next'
+						});
+						if (pagesNum > 2) {
+							return paginationList;
+						} else {
+							return null;
+						}
+					}, /* END of getPaginationList */
+
+					getPrevPageProducts: function() {
+						var prevPageNum = currentPage - 1;
+						if ( prevPageNum < 0 ) prevPageNum = 0;
+						return this.getPageProducts( prevPageNum );
+					}, /* END of getPrevPageProducts */
+
+					getNextPageProducts: function() {
+						var nextPageNum = currentPage + 1;
+						var pagesNum = this.getTotalPagesNum();
+						if ( nextPageNum >= pagesNum ) nextPageNum = pagesNum - 1;
+						return this.getPageProducts( nextPageNum );
+					}, /* END of getNextPageProducts */
+
+					getCurrentPageNum: function() {
+						return currentPage;
+					}, /* END of getCurrentPageNum */
+
+				}
+			}) /* END of factory-pagination */
+
+			.controller('mainCtrl', function( $scope, $http, pagination ){
+
+				$http.get('./menu.json')
+					.success(function(data){
+						$scope.menuObj = data;
+						pagination.setProducts( data.products );
+						$scope.products = pagination.getPageProducts( $scope.currentPage );
+						$scope.paginationList = pagination.getPaginationList();
+					});
+
+				$scope.showPage = function(page) {
+					if ( page == 'prev' ) {
+						$scope.products = pagination.getPrevPageProducts();
+					} else if ( page == 'next' ) {
+						$scope.products = pagination.getNextPageProducts();
+					} else {
+						$scope.products = pagination.getPageProducts( page );
+					}
+				}
+
+				$scope.currentPageNum = function() {
+					return pagination.getCurrentPageNum();
+				}
+
+			})
 	</script>
 </head>
 <body ng-app="app" ng-controller="mainCtrl">
+
 	<div class="container">
-			
-	<textarea ng-placeholder="First line<br>Second line"></textarea>
-	
+
+		<div class="row">
+
+			<div ng-repeat="item in products" class="col-sm-3">
+				<div class="thumbnail">
+					<div class="caption">
+						<h4>{{ item.name }}</h4>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="pagination-wrap">
+			<ul class="pagination">
+				<li ng-repeat="page in paginationList" ng-click="showPage(page.link)" ng-class="{'active': currentPageNum() == page.link}"><a ng-bind-html="page.name"></a></li>
+			</ul>
+		</div>
+
 	</div>
+
 </body>
 </html>
