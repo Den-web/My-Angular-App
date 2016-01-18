@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ng-class в Ангуляр</title>
+	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+	<script>
+		var app = angular.module( 'app', [ ] )
+
+			.controller('mainCtrl', function( $scope ){
+ 				$scope.addClass = false;
+
+				$scope.allowClass = function() {
+    				$scope.addClass = $scope.addClass == false ? true : false;
+  				}
+			})
+
+	</script>
+	<style>
+		.container{
+			padding-top: 20px;
+		}
+	</style>
+</head>
+<body ng-app="app" ng-controller="mainCtrl">
+	<div class="container">
+		<h3>1. Привет класс <span class="label label-default">новинка!</span></h3>
+		<h3>2. Привет класс <span ng-class="class_success">новинка!</span></h3>
+		<h3>3. Привет класс <span ng-class="{'label label-primary' : true}">новинка!</span></h3>
+		<h3>4. Привет класс <span ng-class="{'label label-info' : addclass}" ng-click="allowClass">новинка!</span></h3>
+
+	</div>
+</body>
+</html>
