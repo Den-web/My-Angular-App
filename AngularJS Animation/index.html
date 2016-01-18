@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="angular/angular.min.js"></script>	
 	<script src="angular/angular-animate.min.js"></script>
-	<script src="app.js"></script>
+	
 	<script>
 	var serialAnim = angular.module('serialAnim', ['ngAnimate'])
 		.controller('mainCtrl', function($scope){
@@ -15,17 +15,43 @@
 		});
 	</script>
 	<style>
-		body{
-			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;: 10px;
+		body{font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;: 10px;}
+		.container{max-width: 600px;}
+		p{-webkit-border-radius: 3px;
+		        border-radius: 3px;
+		    width: 17%;
+		  float: left;
+		  margin: 0.6%;
+		  padding: 20px 0;
+		  background: #EBEBEB;
+		  text-shadow: 1px 1px white;
+		  text-align: center;
 		}
-		.container{
-			max-width: 600px;
+		.animation{
+			-webkit-transition: 1s;
+			   -moz-transition: 1s;
+			    -ms-transition: 1s;
+			     -o-transition: 1s;
+			        transition: 1s;
 		}
+
+		.animation.ng-enter-stagger{-webkit-transition: 1s;
+		   -moz-transition: 1s;
+		    -ms-transition: 1s;
+		     -o-transition: 1s;
+		        transition: 1s;}
+
+		.animation.ng-enter{opacity:0;}
+		.animation.ng-enter.ng-enter-active{opacity:1;}
+
+		.animation.ng-leave{opacity: 1;}
+		.animation.ng-leave.ng-leave-active{opacity: 0;}
 	</style>
 </head>
 <body ng-app="serial" ng-controller="mainCtrl">
+<input type="text" placeholder='Поиск' ng-model='search'>
 	<div class="container">
-		
+		<p ng-repeat="item in items|filter:search" class="animation">{{item}}</p>
 
 	</div>
 </body>
