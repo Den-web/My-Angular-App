@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Анимации в Ангуляр</title>
+	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="angular/angular.min.js"></script>	
+	<script src="angular/angular-animate.min.js"></script>
+	<script src="app.js"></script>
+	<script>
+	var serialAnim = angular.module('serialAnim', ['ngAnimate'])
+		.controller('mainCtrl', function($scope){
+			$scope.items=[10,12,13,24,25,26,70,80,88,90,95,103,120];
+		});
+	</script>
+	<style>
+		body{
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;: 10px;
+		}
+		.container{
+			max-width: 600px;
+		}
+	</style>
+</head>
+<body ng-app="serial" ng-controller="mainCtrl">
+	<div class="container">
+		
+
+	</div>
+</body>
+</html>
