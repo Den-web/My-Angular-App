@@ -6,6 +6,10 @@ var restApp = angular.module( 'restApp', [] )
 	var menu = null;
 	var currency = '';
 
+	var currentItem = null;
+	var currentItenStatus = 'new'; //new or edit
+	var currentAccount = 1;
+
 	return {
 		getMenu: function() {
 			var deferred = $q.defer();
@@ -22,6 +26,26 @@ var restApp = angular.module( 'restApp', [] )
 					console.log( status );
 				});
 			return deferred.promise;
+		},
+
+		getCurrancy: function{
+			return currency;
+		}
+
+		setCurrentItem: function( item ) {
+			currentItem = item;
+		},
+
+		getCurrentItem: function(){
+			return currentItem;
+
+		},
+
+		setCurrentItemStatus: function(status){
+			currentItenStatus = status;
+		},
+		getCurrentItemStatus: function(){
+			return currentItemStatus;
 		}
 	}
 }])
@@ -39,5 +63,11 @@ var restApp = angular.module( 'restApp', [] )
 		$scope.currency = menuObj.currency;
 		$scope.products = menuObj.products;
 	});
+
+	$scope.openItem = function (item ){
+		menuFactory.setCurrentItem(item);
+		menuFactory.setCurrentItemStatus('new');
+		menuFactory.setCurrentItemAccount( 1 );
+	}
 
 }])
