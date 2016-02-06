@@ -7,8 +7,8 @@ var restApp = angular.module( 'restApp', [] )
 	var currency = '';
 
 	var currentItem = null;
-	var currentItenStatus = 'new'; //new or edit
-	var currentAccount = 1;
+	var currentItemStatus = 'new'; // new OR edit
+	var currentAmount = 1;
 
 	return {
 		getMenu: function() {
@@ -28,28 +28,32 @@ var restApp = angular.module( 'restApp', [] )
 			return deferred.promise;
 		},
 
-		getCurrancy: function{
+		getCurrency: function() {
 			return currency;
-		}
+		},
 
 		setCurrentItem: function( item ) {
 			currentItem = item;
 		},
 
-		getCurrentItem: function(){
+		getCurrentItem: function() {
 			return currentItem;
-
 		},
 
-		setCurrentItemStatus: function(status){
-			currentItenStatus = status;
+		setCurrentItemStatus: function( status ) {
+			currentItemStatus = status;
 		},
-		getCurrentItemStatus: function(){
+
+		getCurrentItemStatus: function() {
 			return currentItemStatus;
 		},
 
 		setCurrentItemAmount: function( newAmount ) {
-			currentAmount = newAmount
+			currentAmount = newAmount;
+		},
+
+		getCurrentItemAmount: function( newAmount ) {
+			return currentAmount;
 		}
 	}
 }])
@@ -61,19 +65,21 @@ var restApp = angular.module( 'restApp', [] )
 	
 }])
 
-.controller( 'menuListCtrl', [ '$scope', 'menuFactory', function( $scope, menuFactory ){
+.controller( 'menuListCtrl', [ '$scope', '$rootScope', 'menuFactory', function( $scope, $rootScope, menuFactory ){
 	
 	menuFactory.getMenu().then(function( menuObj ){
 		$scope.currency = menuObj.currency;
 		$scope.products = menuObj.products;
 	});
 
-	$scope.openItem = function (item ){
-		menuFactory.setCurrentItem(item);
-		menuFactory.setCurrentItemStatus('new');
+	$scope.openItem = function( item ) {
+		menuFactory.setCurrentItem( item );
+		menuFactory.setCurrentItemStatus( 'new' );
 		menuFactory.setCurrentItemAmount( 1 );
 
-		$.mobile.changePage('#menuItemPage');
+		$rootScope.$broadcast('open-item');
+
+		$.mobile.changePage( '#menuItemPage', {transition: "slideup"} );
 	}
 
 }])

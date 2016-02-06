@@ -64,22 +64,22 @@ ul {
 	border-bottom: 14px solid transparent;
 }
 
-/*--------------------------------Open item ---------------------------------*/
+/*-------------- Open Item -----------------*/
 
-.cart-btn{
-	padding: 2px 7px 0  13px;
+.cart-btn {
+	padding: 2px 7px 0 13px;
 }
-.cart-btn-wrap{
+
+.cart-btn-wrap {
 	position: relative;
 }
 
-.cart-btn .counter{
+.cart-btn .counter {
 	position: absolute;
 	top: -1px;
 	left: -9px;
 	padding: 0 4px;
-	-webkit-border-radius: 100%;
-	        border-radius: 100%;
+	border-radius: 100%;
 	background: orange;
 	font-weight: 300;
 	font-size: 11px;
@@ -87,48 +87,49 @@ ul {
 	text-align: center;
 	text-shadow: none;
 }
-.top-item{
+
+.top-item {
 	position: relative;
 }
 
-.description{
+.description {
 	padding: 1em;
 }
 
-.item-count{
+.item-count {
 	text-align: center;
 }
 
-.item-count ul li{
+.item-count ul li {
 	display: inline-block;
 	border: 2px solid rgb(223, 174, 85);
 	padding: 5px 10px;
 	cursor: pointer;
-	color; rgb(52, 52, 52);
+	color: rgb(52, 52, 52);
 	font-size: 17px;
 }
 
-.item-count ul li:hover, .item-count ul li .active {
+.item-count ul li:hover, .item-count ul li.active {
 	background-color: rgb(137, 137, 137);
 	color: white;
 	font-weight: 700;
 	text-shadow: none;
-	border: 2px solid rgb(100, 100, 100);
+	border: 2px solid rgb(108, 108, 108);
 }
 
-.modifires-select{
+.modifiers-select {
 	padding: 0 3%;
 	margin: 5% auto 0 auto;
 }
 
-#menuItemPage .buttons button:hover, #menuItemPage .buttons  . ui-btn:hover,
-#cartPage .buttons button:hover {
-	background-color: rgb(237, 100,126);
-}
-
-#menuItemPage .buttons button, #menuItemPage .buttons  .ui-btn,
+#menuItemPage .buttons button, #menuItemPage .buttons .ui-btn,
 #cartPage .buttons button {
-	background-color: rgb(255, 222,162);
+	background-color: rgb(255, 222, 162);
 	border-color: rgb(231, 188, 109);
 	color: rgb(92, 67, 21);
+}
+
+#menuItemPage .buttons button:hover, #menuItemPage .buttons .ui-btn:hover,
+#cartPage .buttons button:hover {
+	background-color: rgb(237, 198, 126);
 }

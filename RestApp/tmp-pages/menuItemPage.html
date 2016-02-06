@@ -1,46 +1,51 @@
-<div date-role='page' id='menuItemPage'>
-	<div date-role="header">
-		<h1> {{ currentItem}} </h1>
+<div data-role="page" id="menuItemPage">
+
+	<div data-role="header">
+		<h1> {{ currentItem.name }} </h1>
 		<a href="#cartPage" class="ui-btn-right cart-btn">
-			<div class='counter'>{{ cartCount }}</div>
-			<img src="img/shopping-cart.png" alt="">
+			<div class="counter">{{ cartCount }}</div>
+			<img src="img/shopping-cart.png" />
 		</a>
 	</div>
 
-	<div date-role="main" class="ui-content">
-		<div class='top-item'>
-			<div class="thumbnail"><img ng-src="img/{{ currentItem.image }}"/></div>
+	<div data-role="main" class="ui-content">
+		<div class="top-item">
+			<div class="thumbnail"><img ng-src="img/{{ currentItem.image }}" /></div>
 			<div class="price">{{ currency + currentItem.price }}</div>
-			<div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores deserunt, vero laborum eveniet quasi ab libero hic fugit distinctio similique, nobis porro magni itaque, ut, ipsam molestias consequuntur? Laborum, similique!
-			</div>
-
-			<div class="item-count">
-				<ul>
-						<li>1</li>
-						<li>2</li>
-						<li>3</li>
-						<li>4</li>
-						<li>5</li>
-					</ul>	
-				
-			</div>
-
-			<div class="modifires-select"></div>
-
-			
-			<div class="ui-grid-a buttons">
-				<div class="ui-block-a">
-					<a href="#menuPage" class='ui-btn ui-btn-a ui-corner-all' ng-show="itemStatus == 'new'">cansel</a>
-					<button type="button" data-theme="a" ng-click="removeItem()" ng-show="itemStatus == 'edit'">Remove</button>
-				</div>
-
-
-				<div class="ui-block-b">
-					<button type="button" data-theme="a" ng-click="addItem()" ng-show="itemStatus == 'new'">Add to cart</button>
-					<button type="button" data-theme="a" ng-click="saveItem()" ng-show="itemStatus == edit">Save</button>
-				</div>
-			</div>
 		</div>
+		<div class="description">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sollicitudin ante ut quam ornare, eu faucibus sem consequat. Nam ornare mollis dignissim. Nam semper risus at laoreet accumsan.
+		</div>
+
+		<div class="item-count">
+			<ul>
+				<li ng-class="{active : activeNum(1)}" ng-click="selectNum(1)">1</li>
+				<li ng-class="{active : activeNum(2)}" ng-click="selectNum(2)">2</li>
+				<li ng-class="{active : activeNum(3)}" ng-click="selectNum(3)">3</li>
+				<li ng-class="{active : activeNum(4)}" ng-click="selectNum(4)">4</li>
+				<li ng-class="{active : activeNum(5)}" ng-click="selectNum(5)">5</li>
+			</ul>
+		</div>
+
+		<div class="modifiers-select" ng-show="currentItem.modifiers">
+			<multiple-select-widget></multiple-select-widget>
+		</div>
+
+
+		<div class="ui-grid-a buttons">
+
+			<div class="ui-block-a">
+				<a href="#menuPage" class="ui-btn ui-btn-a ui-shadow ui-corner-all" ng-show="itemStatus == 'new'">Cancel</a>
+				<button type="button" data-theme="a" ng-click="removeItem()" ng-show="itemStatus == 'edit'">Remove</button>
+			</div>
+
+			<div class="ui-block-b">
+				<button type="button" data-theme="a" ng-click="addItem()" ng-show="itemStatus == 'new'">+ Add to Cart</button>
+				<button type="button" data-theme="a" ng-click="saveItem()" ng-show="itemStatus == 'edit'">Save</button>
+			</div>
+
+		</div>
+
 	</div>
 
 </div>
