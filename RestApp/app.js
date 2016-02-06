@@ -46,6 +46,10 @@ var restApp = angular.module( 'restApp', [] )
 		},
 		getCurrentItemStatus: function(){
 			return currentItemStatus;
+		},
+
+		setCurrentItemAmount: function( newAmount ) {
+			currentAmount = newAmount
 		}
 	}
 }])
@@ -67,7 +71,9 @@ var restApp = angular.module( 'restApp', [] )
 	$scope.openItem = function (item ){
 		menuFactory.setCurrentItem(item);
 		menuFactory.setCurrentItemStatus('new');
-		menuFactory.setCurrentItemAccount( 1 );
+		menuFactory.setCurrentItemAmount( 1 );
+
+		$.mobile.changePage('#menuItemPage');
 	}
 
 }])
