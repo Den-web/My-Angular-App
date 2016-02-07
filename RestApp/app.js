@@ -9,6 +9,7 @@ var restApp = angular.module( 'restApp', [] )
 	var currentItem = null;
 	var currentItemStatus = 'new'; // new OR edit
 	var currentAmount = 1;
+	var currentModifiers = [];
 
 	return {
 		getMenu: function() {
@@ -36,6 +37,16 @@ var restApp = angular.module( 'restApp', [] )
 			currentItem = item;
 		},
 
+		setCurrentItemById: function( id ) {
+			for (var i=0; i < menu.products.length; i++){
+				if ( menu.products[i].id == id ) {
+					currentItem = menu.products[i];
+					return true;
+				}
+			}
+			return false;
+		},
+
 		getCurrentItem: function() {
 			return currentItem;
 		},
@@ -54,6 +65,14 @@ var restApp = angular.module( 'restApp', [] )
 
 		getCurrentItemAmount: function( newAmount ) {
 			return currentAmount;
+		},
+
+		setCurrentModifiers: function( newModifiers ) {
+			currentModifiers = newModifiers;
+		},
+
+		getCurrentModifiers: function() {
+			return currentModifiers;
 		}
 	}
 }])
@@ -131,7 +150,6 @@ var restApp = angular.module( 'restApp', [] )
 		menuFactory.setCurrentItemAmount( 1 );
 
 		$rootScope.$broadcast('open-item');
-
 		$.mobile.changePage( '#menuItemPage', {transition: "slideup"} );
 	}
 

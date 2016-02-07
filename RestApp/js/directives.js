@@ -41,11 +41,14 @@ restApp
 			};
 
 			$scope.saveItem = function() {
-
+				cartFactory.removeItem( $scope.currentItem );
+				$scope.addItem();
 			};
 
 			$scope.removeItem = function() {
-
+				cartFactory.removeItem( $scope.currentItem );
+				$.mobile.changePage('#cartPage', {transition: "slideup"} );
+				$rootScope.$broadcast('open-cart');
 			};
 		}
 	};
@@ -65,6 +68,17 @@ restApp
 				$scope.currency = menuFactory.getCurrency();
 				$scope.total = cartFactory.getTotal();
 			});
+
+			$scope.editItem = function( item ) {
+				var itemSelected = menuFactory.setCurrentItemById( item.id );
+				if ( itemSelected ) {
+					menuFactory.setCurrentItemAmount( item.amount );
+					menuFactory.setCurrentItemStatus( 'edit' );
+					menuFactory.setCurrentModifiers( item.modifiers );
+					$rootScope.$broadcast( 'open-item' );
+					$.mobile.changePage('#menuItemPage', {transition: "slideup"} );
+				}
+			}
 		}
 	}
 }])
@@ -85,6 +99,15 @@ restApp
 					if ( $scope.currentItemStatus == 'new' ) {
 						$( '#select-modifiers' ).find('option').each(function(){
 							$(this).removeAttr('selected');
+						});
+						$('#select-modifiers-menu li a').removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+					} else {
+						var currentModifiers = menuFactory.getCurrentModifiers();
+						$( "#select-modifiers" ).find( 'option' ).each(function(){
+							$(this).removeAttr('selected');
+							for(var i=0; i < currentModifiers.length; i++){
+								if( $(this).val() == currentModifiers[i].indexID ) $(this).attr('selected', 'selected');
+							}
 						});
 					}
 
