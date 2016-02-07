@@ -39,6 +39,14 @@ restApp
 	};
 }])
 
+.directive('cartPage', ['menuFactory', '$rootScope', function( menuFactory, $rootScope){
+	return{
+		restrict: 'E',
+		replace: true,
+		templateUrl: 'tmp-pages/cartPage.html',
+	}
+}])
+
 .directive('multipleSelectWidget',['menuFactory', '$timeout', function( menuFactory, $timeout ){
 	return {
 		restrict: 'E',
